@@ -1,0 +1,43 @@
+create database bank;
+use bank;
+create table employees(e_id int,
+e_salary int check (e_salary>8000),
+e_name varchar(20) not null,
+branch_name varchar(20) not null,
+branch_id varchar(10) primary key,
+e_age int check(e_age>21));
+
+insert into employees values(100,9000,"suji","chennai","EE01",25),
+(101,13000,"surya","chennai","EE02",25),
+(103,15000,"ravi","bangalore","EE03",35),
+(102,35000,"selvi","coimbatore","EE04",34),
+(104,19000,"arul","bangalore","EE05",33),
+
+select*from employees;
+
+create table customer(cus_accNo int not null,
+cus_pin int ,
+cus_name varchar(20) not null,
+balance_amount int,
+acc_type varchar(20),
+cus_panNo varchar(20) primary key,
+cus_contactNo varchar(10),
+cus_address varchar(50) default "not mention",
+branch_id varchar(20));
+select*from customer;
+
+insert into customer values(123456,1111,"monisha",10000,"savings_account","moni123","1234567890","salem","EE01"),
+(2324345,2222,"dharani",25000,"primary_account","dharuu123","9087654329","attur","EE08"),
+(12345786,3333,"varshini",10500,"savings_account","varshu123","1235676789","coimbatore","EE05"),
+(1234586,4444,"priya",50000,"savings_account","pri123","1234564891","erode","EE09"),
+(6789456,5555,"sneha",45100,"primary_account","sne123","4564567456","namakkal","EE02")
+select*from customer;
+
+use bank;
+
+select customer.cus_accNo, customer.cus_pin, customer.cus_name, customer.balance_amount, customer.acc_type, customer.cus_panNo, 
+customer.cus_contactNo, customer.cus_address, employees.e_id, employees.e_salary, employees.e_name, employees.branch_name, employees.e_age
+from customer
+inner join employees
+on employees.branch_id=customer.branch_id;
+select*from customer order by branch_id;
